@@ -1,0 +1,26 @@
+services:
+  testrust:
+    container_name: testrust
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL = postgres://postgres:postgres@dbrocket:5432/postgres
+      - DATABASE_USERNAME = postgres
+      - DATABASE_PASSWORD = postgres
+    depends_on:
+      - dbrocket
+  dbrocket:
+    container_name: dbrocket
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5431:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
